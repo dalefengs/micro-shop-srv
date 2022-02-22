@@ -1,0 +1,8 @@
+peewee
+pymysql
+cryptography
+grpcio
+grpcio-tools
+loguru
+requests
+python-consul

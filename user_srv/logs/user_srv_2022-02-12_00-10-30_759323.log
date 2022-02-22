@@ -1,0 +1,293 @@
+2022-02-12 00:10:30.780 | INFO     | __main__:serve:40 - 启动服务：http://127.0.0.1:50051
+2022-02-12 00:10:45.380 | ERROR    | grpc._server:_call_behavior:443 - An error has been caught in function '_call_behavior', process 'MainProcess' (19135), thread 'ThreadPoolExecutor-0_0' (140558240577088):
+Traceback (most recent call last):
+
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/connections.py", line 613, in connect
+    sock = socket.create_connection(
+           │      └ <function create_connection at 0x7fd654912b90>
+           └ <module 'socket' from '/usr/lib/python3.10/socket.py'>
+  File "/usr/lib/python3.10/socket.py", line 845, in create_connection
+    raise err
+          └ None
+  File "/usr/lib/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+    │    │       └ ('127.0.0.1', 3306)
+    │    └ <method 'connect' of '_socket.socket' objects>
+    └ <socket.socket [closed] fd=-1, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6>
+
+ConnectionRefusedError: [Errno 111] Connection refused
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3096, in connect
+    self._state.set_connection(self._connect())
+    │    │      │              │    └ <function PooledDatabase._connect at 0x7fd652948940>
+    │    │      │              └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+    │    │      └ <function _ConnectionState.set_connection at 0x7fd6528fa950>
+    │    └ <peewee._ConnectionLocal object at 0x7fd65295d0c0>
+    └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/playhouse/pool.py", line 156, in _connect
+    conn = super(PooledDatabase, self)._connect()
+                 │               └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+                 └ <class 'playhouse.pool.PooledDatabase'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 4013, in _connect
+    conn = mysql.connect(db=self.database, **self.connect_params)
+           │     │          │    │           │    └ {'charset': 'utf8', 'sql_mode': 'PIPES_AS_CONCAT', 'use_unicode': True, 'host': 'localhost', 'port': 3306, 'user': 'root', 'p...
+           │     │          │    │           └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │     │          │    └ 'shop_user_srv'
+           │     │          └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │     └ <class 'pymysql.connections.Connection'>
+           └ <module 'pymysql' from '/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/__init__.py'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/connections.py", line 353, in __init__
+    self.connect()
+    │    └ <function Connection.connect at 0x7fd6528cb640>
+    └ <pymysql.connections.Connection object at 0x7fd6527a00a0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/connections.py", line 664, in connect
+    raise exc
+          └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3158, in execute_sql
+    cursor = self.cursor(commit)
+             │    │      └ True
+             │    └ <function Database.cursor at 0x7fd6528fb490>
+             └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3142, in cursor
+    self.connect()
+    │    └ <function PooledDatabase.connect at 0x7fd6529488b0>
+    └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/playhouse/pool.py", line 109, in connect
+    return super(PooledDatabase, self).connect(reuse_if_open)
+                 │               │             └ False
+                 │               └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+                 └ <class 'playhouse.pool.PooledDatabase'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3095, in connect
+    with __exception_wrapper__:
+         └ <peewee.ExceptionWrapper object at 0x7fd6528eaec0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 2933, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+    │       │         │        │           │          └ <traceback object at 0x7fd6527b0b40>
+    │       │         │        │           └ (2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+    │       │         │        └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+    │       │         └ <class 'peewee.OperationalError'>
+    │       └ <class 'peewee.OperationalError'>
+    └ <function reraise at 0x7fd6528d4b80>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 191, in reraise
+    raise value.with_traceback(tb)
+          │     │              └ <traceback object at 0x7fd6527b0b40>
+          │     └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3096, in connect
+    self._state.set_connection(self._connect())
+    │    │      │              │    └ <function PooledDatabase._connect at 0x7fd652948940>
+    │    │      │              └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+    │    │      └ <function _ConnectionState.set_connection at 0x7fd6528fa950>
+    │    └ <peewee._ConnectionLocal object at 0x7fd65295d0c0>
+    └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/playhouse/pool.py", line 156, in _connect
+    conn = super(PooledDatabase, self)._connect()
+                 │               └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+                 └ <class 'playhouse.pool.PooledDatabase'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 4013, in _connect
+    conn = mysql.connect(db=self.database, **self.connect_params)
+           │     │          │    │           │    └ {'charset': 'utf8', 'sql_mode': 'PIPES_AS_CONCAT', 'use_unicode': True, 'host': 'localhost', 'port': 3306, 'user': 'root', 'p...
+           │     │          │    │           └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │     │          │    └ 'shop_user_srv'
+           │     │          └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │     └ <class 'pymysql.connections.Connection'>
+           └ <module 'pymysql' from '/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/__init__.py'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/connections.py", line 353, in __init__
+    self.connect()
+    │    └ <function Connection.connect at 0x7fd6528cb640>
+    └ <pymysql.connections.Connection object at 0x7fd6527a00a0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/connections.py", line 664, in connect
+    raise exc
+          └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+
+peewee.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/usr/lib/python3.10/threading.py", line 966, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x7fd65487df30>
+    └ <Thread(ThreadPoolExecutor-0_0, started daemon 140558240577088)>
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x7fd65487dc60>
+    └ <Thread(ThreadPoolExecutor-0_0, started daemon 140558240577088)>
+  File "/usr/lib/python3.10/threading.py", line 946, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ThreadPoolExecutor-0_0, started daemon 140558240577088)>
+    │    │        │    └ (<weakref at 0x7fd65278d8a0; to 'ThreadPoolExecutor' at 0x7fd652977ac0>, <_queue.SimpleQueue object at 0x7fd652985940>, None,...
+    │    │        └ <Thread(ThreadPoolExecutor-0_0, started daemon 140558240577088)>
+    │    └ <function _worker at 0x7fd65298f6d0>
+    └ <Thread(ThreadPoolExecutor-0_0, started daemon 140558240577088)>
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 83, in _worker
+    work_item.run()
+    │         └ <function _WorkItem.run at 0x7fd65298f7f0>
+    └ <concurrent.futures.thread._WorkItem object at 0x7fd652767a30>
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             │    │   │    │       │    └ {}
+             │    │   │    │       └ <concurrent.futures.thread._WorkItem object at 0x7fd652767a30>
+             │    │   │    └ (<grpc._cython.cygrpc.RequestCallEvent object at 0x7fd65278d350>, <grpc._server._RPCState object at 0x7fd652767ca0>, <bound m...
+             │    │   └ <concurrent.futures.thread._WorkItem object at 0x7fd652767a30>
+             │    └ <function _unary_response_in_pool at 0x7fd652788d30>
+             └ <concurrent.futures.thread._WorkItem object at 0x7fd652767a30>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/grpc/_server.py", line 560, in _unary_response_in_pool
+    response, proceed = _call_behavior(rpc_event, state, behavior,
+                        │              │          │      └ <bound method UserService.GetUserInfoByMobile of <user_srv.handler.user.UserService object at 0x7fd652765360>>
+                        │              │          └ <grpc._server._RPCState object at 0x7fd652767ca0>
+                        │              └ <grpc._cython.cygrpc.RequestCallEvent object at 0x7fd65278d350>
+                        └ <function _call_behavior at 0x7fd652788940>
+> File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/grpc/_server.py", line 443, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           │        │         └ <grpc._server._Context object at 0x7fd6527676a0>
+                           │        └ mobile: "18169630001"
+                           │          
+                           └ <bound method UserService.GetUserInfoByMobile of <user_srv.handler.user.UserService object at 0x7fd652765360>>
+
+  File "/home/lzscxb/Code/Python/micro_shop/user_srv/handler/user.py", line 63, in GetUserInfoByMobile
+    user = User.get(User.mobile == request.mobile)
+           │    │   │    │         │       └ <field property 'MobileRequest.mobile'>
+           │    │   │    │         └ mobile: "18169630001"
+           │    │   │    │           
+           │    │   │    └ <peewee.FieldAccessor object at 0x7fd652976500>
+           │    │   └ <Model: User>
+           │    └ <classmethod(<function Model.get at 0x7fd65292e4d0>)>
+           └ <Model: User>
+
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 6485, in get
+    return sq.get()
+           │  └ <function BaseModelSelect.get at 0x7fd6529345e0>
+           └ <peewee.ModelSelect object at 0x7fd6527a0040>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 6933, in get
+    return clone.execute(database)[0]
+           │     │       └ None
+           │     └ <function BaseQuery.execute at 0x7fd6528f4940>
+           └ <peewee.ModelSelect object at 0x7fd652767580>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 1911, in inner
+    return method(self, database, *args, **kwargs)
+           │      │     │          │       └ {}
+           │      │     │          └ ()
+           │      │     └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │      └ <peewee.ModelSelect object at 0x7fd652767580>
+           └ <function BaseQuery.execute at 0x7fd6528f48b0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 1982, in execute
+    return self._execute(database)
+           │    │        └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │    └ <function SelectBase._execute at 0x7fd6528f64d0>
+           └ <peewee.ModelSelect object at 0x7fd652767580>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 2155, in _execute
+    cursor = database.execute(self)
+             │        │       └ <peewee.ModelSelect object at 0x7fd652767580>
+             │        └ <function Database.execute at 0x7fd6528fb5b0>
+             └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3173, in execute
+    return self.execute_sql(sql, params, commit=commit)
+           │    │           │    │              └ <object object at 0x7fd654bbd4e0>
+           │    │           │    └ ['18169630001', 1, 0]
+           │    │           └ 'SELECT `t1`.`id`, `t1`.`create_time`, `t1`.`update_time`, `t1`.`del_time`, `t1`.`mobile`, `t1`.`password`, `t1`.`safe_passwo...
+           │    └ <function ReconnectMixin.execute_sql at 0x7fd65298cee0>
+           └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/playhouse/shortcuts.py", line 227, in execute_sql
+    raise exc
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/playhouse/shortcuts.py", line 216, in execute_sql
+    return super(ReconnectMixin, self).execute_sql(sql, params, commit)
+                 │               │                 │    │       └ <object object at 0x7fd654bbd4e0>
+                 │               │                 │    └ ['18169630001', 1, 0]
+                 │               │                 └ 'SELECT `t1`.`id`, `t1`.`create_time`, `t1`.`update_time`, `t1`.`del_time`, `t1`.`mobile`, `t1`.`password`, `t1`.`safe_passwo...
+                 │               └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+                 └ <class 'playhouse.shortcuts.ReconnectMixin'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3157, in execute_sql
+    with __exception_wrapper__:
+         └ <peewee.ExceptionWrapper object at 0x7fd6528eaec0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 2933, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+    │       │         │        │           │          └ <traceback object at 0x7fd6527b3700>
+    │       │         │        │           └ (2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+    │       │         │        └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+    │       │         └ <class 'peewee.OperationalError'>
+    │       └ <class 'peewee.OperationalError'>
+    └ <function reraise at 0x7fd6528d4b80>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 191, in reraise
+    raise value.with_traceback(tb)
+          │     │              └ <traceback object at 0x7fd6527b3700>
+          │     └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3158, in execute_sql
+    cursor = self.cursor(commit)
+             │    │      └ True
+             │    └ <function Database.cursor at 0x7fd6528fb490>
+             └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3142, in cursor
+    self.connect()
+    │    └ <function PooledDatabase.connect at 0x7fd6529488b0>
+    └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/playhouse/pool.py", line 109, in connect
+    return super(PooledDatabase, self).connect(reuse_if_open)
+                 │               │             └ False
+                 │               └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+                 └ <class 'playhouse.pool.PooledDatabase'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3095, in connect
+    with __exception_wrapper__:
+         └ <peewee.ExceptionWrapper object at 0x7fd6528eaec0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 2933, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+    │       │         │        │           │          └ <traceback object at 0x7fd6527b0b40>
+    │       │         │        │           └ (2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+    │       │         │        └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+    │       │         └ <class 'peewee.OperationalError'>
+    │       └ <class 'peewee.OperationalError'>
+    └ <function reraise at 0x7fd6528d4b80>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 191, in reraise
+    raise value.with_traceback(tb)
+          │     │              └ <traceback object at 0x7fd6527b0b40>
+          │     └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 3096, in connect
+    self._state.set_connection(self._connect())
+    │    │      │              │    └ <function PooledDatabase._connect at 0x7fd652948940>
+    │    │      │              └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+    │    │      └ <function _ConnectionState.set_connection at 0x7fd6528fa950>
+    │    └ <peewee._ConnectionLocal object at 0x7fd65295d0c0>
+    └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/playhouse/pool.py", line 156, in _connect
+    conn = super(PooledDatabase, self)._connect()
+                 │               └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+                 └ <class 'playhouse.pool.PooledDatabase'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/peewee.py", line 4013, in _connect
+    conn = mysql.connect(db=self.database, **self.connect_params)
+           │     │          │    │           │    └ {'charset': 'utf8', 'sql_mode': 'PIPES_AS_CONCAT', 'use_unicode': True, 'host': 'localhost', 'port': 3306, 'user': 'root', 'p...
+           │     │          │    │           └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │     │          │    └ 'shop_user_srv'
+           │     │          └ <user_srv.config.config.ReconnectMysqlDatabase object at 0x7fd6530818d0>
+           │     └ <class 'pymysql.connections.Connection'>
+           └ <module 'pymysql' from '/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/__init__.py'>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/connections.py", line 353, in __init__
+    self.connect()
+    │    └ <function Connection.connect at 0x7fd6528cb640>
+    └ <pymysql.connections.Connection object at 0x7fd6527a00a0>
+  File "/home/lzscxb/Code/Python/.virtualenvs/micro_shop/lib/python3.10/site-packages/pymysql/connections.py", line 664, in connect
+    raise exc
+          └ OperationalError(2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+
+peewee.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([Errno 111] Connection refused)")
+2022-02-12 20:36:01.549 | INFO     | __main__:on_exit:19 - grpc server exit

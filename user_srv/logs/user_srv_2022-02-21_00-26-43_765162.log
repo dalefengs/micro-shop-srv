@@ -1,0 +1,4 @@
+2022-02-21 00:26:43.790 | INFO     | __main__:serve:80 - 启动服务: 192.168.200.110:50051
+2022-02-21 00:26:43.868 | INFO     | __main__:serve:89 - user-srv服务注册成功
+2022-02-21 00:30:28.160 | INFO     | __main__:on_exit:24 - grpc server exit
+2022-02-21 00:30:28.231 | INFO     | __main__:on_exit:28 - user-srv服务已注销
