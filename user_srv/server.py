@@ -3,9 +3,9 @@ import logging
 import os
 import signal
 import sys
-from concurrent import futures
 import socket
 import grpc
+from concurrent import futures
 from loguru import logger
 from functools import partial
 
@@ -78,7 +78,7 @@ def serve():
     signal.signal(signal.SIGINT, partial(on_exit,service_id=service_id))
     signal.signal(signal.SIGTERM, partial(on_exit,service_id=service_id))
 
-    logger.info(f"启动服务: {args.ip}:{args.port}")
+    logger.info(f"启动服务: {args.ip}:{args.port}!")
     server.start()
 
     logger.info("服务注册中...")
@@ -86,9 +86,9 @@ def serve():
     success = c.register(name=server_config.SERVER_NAME, service_id=service_id, address=args.ip,
                          port=args.port, tags=server_config.SERVER_TAGS, check=None)
     if not success:
-        logger.error("服务注册失败")
+        logger.error("服务注册失败!")
         sys.exit(0)
-    logger.info(f"{server_config.SERVER_NAME}服务注册成功")
+    logger.info(f"{server_config.SERVER_NAME}服务注册成功!")
 
     server.wait_for_termination()
 

@@ -6,3 +6,4 @@ grpcio-tools
 loguru
 requests
 python-consul
+nacos-sdk-python

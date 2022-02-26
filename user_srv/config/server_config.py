@@ -1,7 +1,10 @@
-HOST = "192.168.200.110"
-PORT = 50051
-SERVER_NAME = "user-srv"
-SERVER_TAGS = ["shop", "srv", "python", "users"]
+from user_srv.config.config import config
+
+consul = config["consul"]
+HOST = config["host"]
+PORT = config['port']
+SERVER_NAME = config["server_name"]
+SERVER_TAGS = config["server_tags"]
 # Consul 配置
-CONSUL_HOST = "172.17.0.1"
-CONSUL_PORT = 8500
+CONSUL_HOST = consul["host"]
+CONSUL_PORT = consul["port"]
