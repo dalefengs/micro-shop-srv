@@ -1,4 +1,4 @@
-from user_srv.config.config import config
+from goods_srv.config.config import config
 
 consul = config["consul"]
 HOST = config["host"]

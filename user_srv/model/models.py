@@ -1,9 +1,10 @@
 from peewee import *
 from user_srv.config import config
+from time import time
 
 
 class BaseModel(Model):
-    create_time = BigIntegerField(default=0, null=False, verbose_name="创建时间")
+    create_time = BigIntegerField(default=time() * 1000, null=False, verbose_name="创建时间")
     update_time = BigIntegerField(default=0, null=False, verbose_name="更新时间")
     del_time = IntegerField(default=0, null=False, verbose_name="删除时间")
 
