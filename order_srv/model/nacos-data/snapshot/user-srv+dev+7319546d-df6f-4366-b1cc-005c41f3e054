@@ -1,0 +1,10 @@
+{
+    "host": "172.18.0.1",
+    "port": 50051,
+    "server_name": "user-srv",
+    "server_tags": ["shop", "srv", "python", "users"],
+    "consul": {
+        "host": "172.17.0.1",
+        "port": 8500
+    }
+}

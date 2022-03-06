@@ -1,0 +1,4 @@
+/user_srv/logs/*
+/inventory_srv/logs/*
+/goods_srv/logs/*
+/order_srv/logs/*

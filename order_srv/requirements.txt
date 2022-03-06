@@ -7,4 +7,3 @@ loguru
 requests
 python-consul
 nacos-sdk-python
-python-redis-lock

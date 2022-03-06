@@ -1,0 +1,10 @@
+
+{
+    "mysql": {
+        "db": "shop_order_srv",
+        "host": "172.17.0.1",
+        "username": "root",
+        "password": "000",
+        "port": 3306
+    }
+}

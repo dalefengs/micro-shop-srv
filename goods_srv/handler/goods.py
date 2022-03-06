@@ -116,13 +116,15 @@ class GoodsService(goods_pb2_grpc.GoodsServicer):
         return rsp
 
     # 批量获取商品信息
+    @logger.catch
     def BatchGetGoods(self, request: goods_pb2.BatchGoodsIdInfo, context):
+        # 批量获取商品详情， 订单新建的时候可以使用
         rsp = goods_pb2.GoodsListResponse()
-        goods = Goods.where(Goods.id.in_(request.id))
+        goods = Goods.select().where(Goods.id.in_(list(request.id)))
+
         rsp.total = goods.count()
         for good in goods:
-            data = self.convert_model_to_message(good)
-            rsp.data.append(data)
+            rsp.data.append(self.convert_model_to_message(good))
 
         return rsp
 
@@ -159,7 +161,7 @@ class GoodsService(goods_pb2_grpc.GoodsServicer):
     def CreateGoods(self, request: goods_pb2.CreateGoodsInfo, context):
         rsp = goods_pb2.GoodsInfoResponse()
         try:
-            category = Category.get(Category.id == request.id)
+            category = Category.get(Category.id == request.categoryId)
         except DoesNotExist:
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details("分类不存在")
@@ -169,7 +171,7 @@ class GoodsService(goods_pb2_grpc.GoodsServicer):
             brand = Brands.get(Brands.id == request.brandId)
         except DoesNotExist:
             context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details("分类不存在")
+            context.set_details("品牌不存在")
             return rsp
 
         goods = Goods()
@@ -193,30 +195,30 @@ class GoodsService(goods_pb2_grpc.GoodsServicer):
 
     @logger.catch
     def UpdateGoods(self, request: goods_pb2.GoodInfoRequest, context):
-        # 商品更新
-        try:
-            category = Category.get(Category.id == request.categoryId)
-        except DoesNotExist as e:
-            context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details("商品分类不存在")
-            return goods_pb2.GoodsInfoResponse()
-
-        try:
-            brand = Brands.get(Brands.id == request.brandId)
-        except DoesNotExist as e:
-            context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details("品牌不存在")
-            return goods_pb2.GoodsInfoResponse()
-
         try:
             goods = Goods.get(Goods.id == request.id)
         except DoesNotExist as e:
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details("商品不存在")
             return goods_pb2.GoodsInfoResponse()
+        # 商品更新
+        if request.categoryId:
+            try:
+                category = Category.get(Category.id == request.categoryId)
+                goods.category = category
+            except DoesNotExist as e:
+                context.set_code(grpc.StatusCode.NOT_FOUND)
+                context.set_details("商品分类不存在")
+                return goods_pb2.GoodsInfoResponse()
+        if request.brandId:
+            try:
+                brand = Brands.get(Brands.id == request.brandId)
+                goods.brand = brand
+            except DoesNotExist as e:
+                context.set_code(grpc.StatusCode.NOT_FOUND)
+                context.set_details("品牌不存在")
+                return goods_pb2.GoodsInfoResponse()
 
-        goods.brand = brand
-        goods.category = category
         goods.name = request.name
         goods.goods_sn = request.goodsSn
         goods.market_price = request.marketPrice

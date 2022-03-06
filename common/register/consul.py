@@ -1,6 +1,7 @@
-from common.register.base import Register
+import random
 import consul
 import requests
+from common.register.base import Register
 
 
 class ConsulRegister(Register):
@@ -16,8 +17,8 @@ class ConsulRegister(Register):
                 "GRPC": f"{address}:{port}",
                 "GRPCUseTLS": False,
                 "Timeout": "10s",
-                "Interval": "10s",
-                "DeregisterCriticalServiceAfter": "1m",
+                "Interval": "5s",
+                "DeregisterCriticalServiceAfter": "30s",
             }
         return self.c.agent.service.register(name=name, service_id=service_id, address=address, port=port, tags=tags,
                                              check=check)
@@ -36,7 +37,13 @@ class ConsulRegister(Register):
         params = {
             "filter": f'Service == "{name}"'
         }
-        headers = {
-            "Content-Type": "application/json"
-        }
-        return requests.put(url, params=params, headers=headers).json()
+        return requests.get(url, params=params).json()
+
+    # 获取服务端口和域名
+    def get_host_port(self, name):
+        data = self.filter_services(name)
+        if data:
+            service = random.choice(list(data.values()))
+            return service["Address"], service["Port"]
+        return None, None
+
