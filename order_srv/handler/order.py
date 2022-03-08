@@ -94,7 +94,7 @@ class OrderService(order_pb2_grpc.OrderServicer):
             cat = ShoppingCart.get(ShoppingCart.id == request.id)
         except DoesNotExist:
             context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_detail("记录不存在")
+            context.set_details("记录不存在")
             return empty_pb2.Empty()
 
         if request.nums:
@@ -103,19 +103,19 @@ class OrderService(order_pb2_grpc.OrderServicer):
         result = cat.sava()
         if not result:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_detail("添加购物车失败")
+            context.set_details("添加购物车失败")
             return empty_pb2.Empty()
         return empty_pb2.Empty()
 
     @logger.catch
     def DeleteCartItem(self, request: order_pb2.CartItemRequest, context):
         try:
-            cat = ShoppingCart.get(ShoppingCart.id == request.id)
+            cat = ShoppingCart.get(ShoppingCart.user == request.userId,ShoppingCart.goods == request.goodsId)
             cat.delete_instance(permanently=True)
             return empty_pb2.Empty()
         except DoesNotExist:
             context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_detail("记录不存在")
+            context.set_details("记录不存在")
             return empty_pb2.Empty()
 
     @logger.catch
@@ -201,7 +201,7 @@ class OrderService(order_pb2_grpc.OrderServicer):
             except Exception as e:
                 tnx.rollback()
                 context.set_code(grpc.StatusCode.INTERNAL)
-                context.set_detail("创建订单失败")
+                context.set_details("创建订单失败")
                 return rsp
 
         rsp.id = order.id
